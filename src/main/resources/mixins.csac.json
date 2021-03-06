@@ -1,0 +1,7 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "tudbut.csac.mixin",
+  "mixins": ["MixinNetworkManager"],
+  "client": [],
+  "server": []
+}
