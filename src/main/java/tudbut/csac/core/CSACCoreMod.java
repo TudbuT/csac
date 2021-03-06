@@ -12,9 +12,9 @@ import java.net.URL;
 import java.security.CodeSource;
 import java.util.Map;
 
-public class CoreMod implements IFMLLoadingPlugin {
+public class CSACCoreMod implements IFMLLoadingPlugin {
 
-    public CoreMod() {
+    public CSACCoreMod() {
         MixinBootstrap.init();
 
         CodeSource codeSource = this.getClass().getProtectionDomain().getCodeSource();
