@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import tudbut.csac.CSAC;
 import tudbut.csac.Utils;
+import tudbut.csac.detection.BotDetection;
 import tudbut.csac.detection.HitDetection;
 
 import javax.xml.crypto.Data;
@@ -30,6 +31,7 @@ public class EventHandler {
     @SubscribeEvent
     public static void onTick(TickEvent.ClientTickEvent event) {
         if(CSAC.ingameCheck()) {
+            BotDetection.onTick();
             HitDetection.onTick();
         }
     }
