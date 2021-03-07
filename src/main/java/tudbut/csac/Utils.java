@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import de.tudbut.type.Vector2d;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -75,5 +76,28 @@ public class Utils { // A bunch of utils that don't deserve their own class, sel
         double yaw = Math.toDegrees(Math.atan2(diffZ, diffX)) - 90f;
         double pitch = (-Math.toDegrees(Math.atan2(diffY, diffXZ)));
         return new Vector2d (MathHelper.wrapDegrees(yaw), MathHelper.wrapDegrees(pitch));
+    }
+    
+    public static BlockPos getRealPos(Vec3d vec3d) {
+        double x;
+        double y;
+        double z;
+        
+        if(vec3d.x < 0)
+            x = (Math.ceil(vec3d.x) - 0.5);
+        else
+            x = (Math.floor(vec3d.x) + 0.5);
+        
+        if(vec3d.y < 0)
+            y = (Math.ceil(vec3d.y) - 0.5);
+        else
+            y = (Math.floor(vec3d.y) + 0.5);
+        
+        if(vec3d.z < 0)
+            z = (Math.ceil(vec3d.z) - 0.5);
+        else
+            z = (Math.floor(vec3d.z) + 0.5);
+        
+        return new BlockPos(x,y,z);
     }
 }

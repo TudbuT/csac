@@ -11,14 +11,14 @@ public class AttackerDetection {
     public static void onHit(EntityLivingBase entity) {
         AntiCheat.onHit(
                 entity,
-                mc.world.getEntities(
+                BotDetection.digest(mc.world.getEntities(
                         EntityLivingBase.class,
                         e ->
                                 e.getDistance(entity) < 10 &&
                                 e.getEntityId() != mc.player.getEntityId() &&
                                 e.getEntityId() != entity.getEntityId() &&
                                 e.getHeldItemMainhand().getItem() != Items.BOW
-                ).toArray(new EntityLivingBase[0])
+                ))
         );
     }
 }
