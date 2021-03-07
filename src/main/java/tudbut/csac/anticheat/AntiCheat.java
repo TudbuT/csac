@@ -88,16 +88,19 @@ public class AntiCheat {
             if (f > 0.5) {
                 ChatUtils.print("§6[WARN] " + mostLikelyAttacker.getName() + " may be hacking. Failed checks: " + new StringArray(failedChecks.toArray(new String[0])).join(", "));
                 results.setIfNull(mostLikelyAttacker.getName(), 0f);
-                results.set(mostLikelyAttacker.getName(), results.get(mostLikelyAttacker.getName()) + f);
-                if(results.get(mostLikelyAttacker.getName()) > 7.5) {
-                    ChatUtils.print("§c[REPORTING] " + mostLikelyAttacker.getName() + " is very likely to be hacking. Reporting...");
-                    try {
-                        Thread.sleep(500);
+                if(results.get(mostLikelyAttacker.getName()) != -1) {
+                    results.set(mostLikelyAttacker.getName(), results.get(mostLikelyAttacker.getName()) + f);
+                    if (results.get(mostLikelyAttacker.getName()) > 7.5) {
+                        ChatUtils.print("§c[REPORTING] " + mostLikelyAttacker.getName() + " is very likely to be hacking. Reporting...");
+                        results.set(mostLikelyAttacker.getName(), -1f);
+                        try {
+                            Thread.sleep(1000);
+                        }
+                        catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        ChatUtils.simulateSend("/report " + mostLikelyAttacker.getName() + " cheating", false);
                     }
-                    catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    ChatUtils.simulateSend("/report " + mostLikelyAttacker.getName() + " cheating", false);
                 }
             }
         }
