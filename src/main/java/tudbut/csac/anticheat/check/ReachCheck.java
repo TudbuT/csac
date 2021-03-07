@@ -77,7 +77,7 @@ public class ReachCheck extends Check {
         
         // Reach below configured max?
         public boolean isReachNormal() {
-            return playerReach < 4.5;
+            return playerReach < 4;
         }
         
         // Offense counter for plugin
