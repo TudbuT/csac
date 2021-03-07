@@ -37,12 +37,12 @@ public class AntiCheat {
     
     public static float aimDist(EntityLivingBase attacked, EntityLivingBase attacker)  {
         Vector2d vector2d = Utils.getLegitRotations(attacked.getPositionVector().add(0, 1.5, 0));
-        float distX0 = (float) (vector2d.getX() % 360 - MathHelper.wrapDegrees(attacker.rotationYaw) % 360);
-        float distY0 = (float) (vector2d.getY() % 360 - MathHelper.wrapDegrees(attacker.rotationPitch) % 360);
+        float distX0 = (float) ((vector2d.getX() + 180) % 360 - (MathHelper.wrapDegrees(attacker.rotationYaw) + 180) % 360);
+        float distY0 = (float) ((vector2d.getY() + 180) % 360 - (MathHelper.wrapDegrees(attacker.rotationPitch) + 180) % 360);
         float distX1 = (float) (vector2d.getX() - MathHelper.wrapDegrees(attacker.rotationYaw));
         float distY1 = (float) (vector2d.getY() - MathHelper.wrapDegrees(attacker.rotationPitch));
-        float distX = Math.min(Math.abs(distX0), distX1 % 360);
-        float distY = Math.min(Math.abs(distY0), distY1 % 360);
+        float distX = Math.min(Math.abs(distX0), Math.abs(distX1));
+        float distY = Math.min(Math.abs(distY0), Math.abs(distY1));
         return (float) Math.sqrt(distX * distX + distY * distY);
     }
     
