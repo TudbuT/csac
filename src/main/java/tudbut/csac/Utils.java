@@ -74,6 +74,6 @@ public class Utils { // A bunch of utils that don't deserve their own class, sel
         double diffXZ = Math.sqrt(diffX * diffX + diffZ * diffZ);
         double yaw = Math.toDegrees(Math.atan2(diffZ, diffX)) - 90f;
         double pitch = (-Math.toDegrees(Math.atan2(diffY, diffXZ)));
-        return new Vector2d (MathHelper.wrapDegrees(yaw), MathHelper.wrapDegrees(pitch));
+        return new Vector2d (yaw % 360, pitch % 360);
     }
 }

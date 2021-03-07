@@ -34,8 +34,8 @@ public class AntiCheat {
     
     public static float aimDist(EntityLivingBase attacked, EntityLivingBase attacker)  {
         Vector2d vector2d = Utils.getLegitRotations(attacked.getPositionVector().add(0, 1.5, 0));
-        float distX = (float) (vector2d.getX() - (MathHelper.wrapDegrees(attacker.rotationYaw)));
-        float distY = (float) (vector2d.getY() - (MathHelper.wrapDegrees(attacker.rotationPitch)));
+        float distX = (float) (vector2d.getX() - attacker.rotationYaw % 360);
+        float distY = (float) (vector2d.getY() - attacker.rotationPitch % 360);
         return (float) Math.sqrt(distX * distX + distY * distY);
     }
     
@@ -76,7 +76,7 @@ public class AntiCheat {
                 failedChecks.add("ReachCheck");
             f += f1;
     
-            f /= 2 * 0.75f;
+            f *= 0.5 * 1.5f;
     
             if (f > 0.5) {
                 ChatUtils.print("§6[WARN] " + mostLikelyAttacker.getName() + " may be hacking. Failed checks: " + new StringArray(failedChecks.toArray(new String[0])).join(", "));
