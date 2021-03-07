@@ -2,6 +2,7 @@ package tudbut.csac.detection;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import tudbut.csac.anticheat.AntiCheat;
 
 public class AttackerDetection {
@@ -15,7 +16,8 @@ public class AttackerDetection {
                         e ->
                                 e.getDistance(entity) < 10 &&
                                 e.getEntityId() != mc.player.getEntityId() &&
-                                e.getEntityId() != entity.getEntityId()
+                                e.getEntityId() != entity.getEntityId() &&
+                                e.getHeldItemMainhand().getItem() != Items.BOW
                 ).toArray(new EntityLivingBase[0])
         );
     }
