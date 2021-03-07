@@ -77,7 +77,7 @@ public class ReachCheck extends Check {
         
         // Reach below configured max?
         public boolean isReachNormal() {
-            return playerReach < 3.5;
+            return playerReach < 4;
         }
         
         // Offense counter for plugin
@@ -97,7 +97,7 @@ public class ReachCheck extends Check {
                     return;
                 }
             }
-            offenses -= 0.2;
+            offenses -= 0.5;
             // If reach is normal and achievable,
             // remove one fifth of a offense, so after 5 normal hits,
             // a strange hit is normalized again.
