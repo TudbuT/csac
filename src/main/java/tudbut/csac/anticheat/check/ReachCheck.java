@@ -30,7 +30,7 @@ public class ReachCheck extends Check {
         // Calculate reach and add it to the record
         record.recordReach(calculateReach(attacker, attacked));
         
-        f = record.offenses / 5;
+        f = record.offenses / 8;
         
         return f;
     }
@@ -77,7 +77,7 @@ public class ReachCheck extends Check {
         
         // Reach below configured max?
         public boolean isReachNormal() {
-            return playerReach < 4;
+            return playerReach < 4.5;
         }
         
         // Offense counter for plugin
