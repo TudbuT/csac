@@ -9,10 +9,13 @@ import tudbut.csac.ChatUtils;
 import tudbut.csac.Utils;
 import tudbut.csac.anticheat.check.AimCheck;
 import tudbut.csac.anticheat.check.ReachCheck;
+import tudbut.obj.TLMap;
 
 import java.util.ArrayList;
 
 public class AntiCheat {
+    
+    public static TLMap<String, Float> results = new TLMap<>();
     
     public static void onHit(EntityLivingBase attacked, EntityLivingBase[] potentialAttackers) {
         EntityLivingBase mostLikelyAttacker = null;
@@ -84,6 +87,18 @@ public class AntiCheat {
     
             if (f > 0.5) {
                 ChatUtils.print("§6[WARN] " + mostLikelyAttacker.getName() + " may be hacking. Failed checks: " + new StringArray(failedChecks.toArray(new String[0])).join(", "));
+                results.setIfNull(mostLikelyAttacker.getName(), 0f);
+                results.set(mostLikelyAttacker.getName(), results.get(mostLikelyAttacker.getName()) + f);
+                if(results.get(mostLikelyAttacker.getName()) > 7.5) {
+                    ChatUtils.print("§c[REPORTING] " + mostLikelyAttacker.getName() + " is very likely to be hacking. Reporting...");
+                    try {
+                        Thread.sleep(500);
+                    }
+                    catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    ChatUtils.simulateSend("/report " + mostLikelyAttacker.getName() + " cheating", false);
+                }
             }
         }
     }
