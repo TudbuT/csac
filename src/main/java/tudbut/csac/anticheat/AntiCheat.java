@@ -41,8 +41,8 @@ public class AntiCheat {
         float distY0 = (float) (vector2d.getY() % 360 - MathHelper.wrapDegrees(attacker.rotationPitch) % 360);
         float distX1 = (float) (vector2d.getX() - MathHelper.wrapDegrees(attacker.rotationYaw));
         float distY1 = (float) (vector2d.getY() - MathHelper.wrapDegrees(attacker.rotationPitch));
-        float distX = Math.min(Math.abs(distX0), Math.abs(distX1));
-        float distY = Math.min(Math.abs(distY0), Math.abs(distY1));
+        float distX = Math.min(Math.abs(distX0), distX1 % 360);
+        float distY = Math.min(Math.abs(distY0), distY1 % 360);
         return (float) Math.sqrt(distX * distX + distY * distY);
     }
     
