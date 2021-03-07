@@ -53,11 +53,7 @@ public class AntiCheat {
             f += attacker.swingProgress * 50;
         }
         
-        Vector2d vector2d = Utils.getLegitRotations(attacked.getPositionVector().add(0, 1.5, 0));
-        float distX = (float) (vector2d.getX() - (MathHelper.wrapDegrees(attacker.rotationYaw)));
-        float distY = (float) (vector2d.getY() - (MathHelper.wrapDegrees(attacker.rotationPitch)));
-        float dist = (float) Math.sqrt(distX * distX + distY * distY);
-        f += dist;
+        f += aimDist(attacked, attacker);
         
         if(attacker.swingProgressInt == -1) {
             f *= 50;
