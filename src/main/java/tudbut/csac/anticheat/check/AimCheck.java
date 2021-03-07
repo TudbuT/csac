@@ -9,6 +9,7 @@ public class AimCheck extends Check {
         float f = 0;
     
         float aimDist = AntiCheat.aimDist(attacked, attacker);
+        System.out.println(aimDist);
         f += aimDist / (360);
         
         return f;
