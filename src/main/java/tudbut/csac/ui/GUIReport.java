@@ -45,42 +45,41 @@ public class GUIReport {
         int x = resolution.getScaledWidth() / 6;
         int y = (int) (resolution.getScaledHeight() / 2.5 - Math.min(players.length * 10, 10) / 2);
     
-        if (players.length != playersLastTick.length) {
-            for (int i = 0; i < players.length; i++) {
-                NetworkPlayerInfo player = players[i];
-                boolean b = false;
-                for (int j = 0; j < playersLastTick.length; j++) {
-                    if (playersLastTick[j].getGameProfile().getId().equals(player.getGameProfile().getId())) {
-                        b = true;
-                        break;
-                    }
-                }
-                if (!b) {
-                    if (selected >= i) {
-                        selected++;
-                    }
+        for (int i = 0; i < players.length; i++) {
+            NetworkPlayerInfo player = players[i];
+            boolean b = false;
+            for (int j = 0; j < playersLastTick.length; j++) {
+                if (playersLastTick[j].getGameProfile().getId().equals(player.getGameProfile().getId())) {
+                    b = true;
+                    break;
                 }
             }
-            for (int i = 0; i < playersLastTick.length; i++) {
-                NetworkPlayerInfo player = playersLastTick[i];
-                boolean b = false;
-                for (int j = 0; j < players.length; j++) {
-                    if (players[j].getGameProfile().getId().equals(player.getGameProfile().getId())) {
-                        b = true;
-                        break;
-                    }
-                }
-                if (!b) {
-                    if (selected == i)
-                        selectedType = -1;
-                    if (selected > i) {
-                        selected--;
-                    }
+            if (!b) {
+                if (selected >= i) {
+                    selected++;
                 }
             }
         }
-        
-        if(mc.currentScreen != null)
+        for (int i = 0; i < playersLastTick.length; i++) {
+            NetworkPlayerInfo player = playersLastTick[i];
+            boolean b = false;
+            for (int j = 0; j < players.length; j++) {
+                if (players[j].getGameProfile().getId().equals(player.getGameProfile().getId())) {
+                    b = true;
+                    break;
+                }
+            }
+            if (!b) {
+                if (selected == i)
+                    selectedType = -1;
+                if (selected > i) {
+                    selected--;
+                }
+            }
+        }
+    
+    
+        if (mc.currentScreen != null)
             selectedType = -1;
     
         if (selected >= players.length)
