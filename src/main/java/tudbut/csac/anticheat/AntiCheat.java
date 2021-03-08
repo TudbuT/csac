@@ -99,7 +99,7 @@ public class AntiCheat {
             }
             else {
                 if (results.get(mostLikelyAttacker.getName()) != null && results.get(mostLikelyAttacker.getName()) != -1 && results.get(mostLikelyAttacker.getName()) > 0.1) {
-                    results.set(mostLikelyAttacker.getName(), results.get(mostLikelyAttacker.getName()) - 0.1f);
+                    results.set(mostLikelyAttacker.getName(), results.get(mostLikelyAttacker.getName()) - 0.2f);
                 }
             }
         }
