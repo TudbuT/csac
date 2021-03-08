@@ -14,7 +14,7 @@ public class AttackerDetection {
                 BotDetection.digest(mc.world.getEntities(
                         EntityLivingBase.class,
                         e ->
-                                e.getDistance(entity) < 10 &&
+                                e.getDistance(entity) < 8 &&
                                 e.getEntityId() != mc.player.getEntityId() &&
                                 e.getEntityId() != entity.getEntityId() &&
                                 e.getHeldItemMainhand().getItem() != Items.BOW &&

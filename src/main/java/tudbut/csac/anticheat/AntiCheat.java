@@ -90,7 +90,7 @@ public class AntiCheat {
                 results.setIfNull(mostLikelyAttacker.getName(), 0f);
                 if(results.get(mostLikelyAttacker.getName()) != -1) {
                     results.set(mostLikelyAttacker.getName(), results.get(mostLikelyAttacker.getName()) + f);
-                    if (results.get(mostLikelyAttacker.getName()) > 6) {
+                    if (results.get(mostLikelyAttacker.getName()) > 3) {
                         ChatUtils.print("§c[REPORTING] " + mostLikelyAttacker.getName() + " is very likely to be hacking. Reporting...");
                         results.set(mostLikelyAttacker.getName(), -1f);
                         try {
