@@ -79,6 +79,9 @@ public class GUIReport {
                 }
             }
         }
+        
+        if(mc.currentScreen != null)
+            selectedType = -1;
     
         if (selected >= players.length)
             selected = players.length - 1;
