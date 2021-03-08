@@ -21,7 +21,6 @@ public class GUIReport {
     static boolean enterDown = false;
     static NetworkPlayerInfo[] playersLastTick = mc.player.connection.getPlayerInfoMap().toArray(new NetworkPlayerInfo[0]);
     
-    
     public static void render() {
         ScaledResolution resolution = new ScaledResolution(mc);
     
@@ -41,7 +40,7 @@ public class GUIReport {
                     }
                 }
                 if(!b) {
-                    if(selected > i) {
+                    if(selected >= i) {
                         selected++;
                     }
                 }
@@ -70,7 +69,7 @@ public class GUIReport {
         
         for (int i = Math.max(0, selected - 5); i < Math.min(selected + 5, players.length); i++) {
             mc.fontRenderer.drawString(
-                    (selected == i ? "|>" : "| ") + (
+                    (selected == i ? "|-" : "|  ") + (
                             players[i].getDisplayName() != null ?
                             players[i].getDisplayName().getUnformattedText() :
                             ScorePlayerTeam.formatPlayerName(
@@ -78,7 +77,7 @@ public class GUIReport {
                                     players[i].getGameProfile().getName()
                             )
                     ),
-                    x, y, 0xffffff
+                    x, y, selected == i ? 0xff0000 : 0x00ff00
             );
             y+=10;
         }
