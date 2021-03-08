@@ -11,12 +11,14 @@ import net.minecraft.network.play.server.SPacketAnimation;
 import net.minecraft.network.play.server.SPacketEntityEffect;
 import net.minecraft.network.play.server.SPacketEntityMetadata;
 import net.minecraft.network.play.server.SPacketEntityStatus;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import tudbut.csac.CSAC;
 import tudbut.csac.Utils;
 import tudbut.csac.detection.BotDetection;
 import tudbut.csac.detection.HitDetection;
+import tudbut.csac.ui.GUIReport;
 
 import javax.xml.crypto.Data;
 import java.util.HashMap;
@@ -33,6 +35,13 @@ public class EventHandler {
         if(CSAC.ingameCheck()) {
             BotDetection.onTick();
             HitDetection.onTick();
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onHUDRender(RenderGameOverlayEvent.Post event) {
+        if(event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
+            GUIReport.render();
         }
     }
 }
