@@ -37,10 +37,14 @@ public class AntiCheat {
     
     public static float aimDist(EntityLivingBase attacked, EntityLivingBase attacker)  {
         Vector2d vector2d = Utils.getLegitRotations(attacked.getPositionVector().add(0, 1.5, 0));
-        float distX0 = (float) ((vector2d.getX() + 180) % 360 - (MathHelper.wrapDegrees(attacker.rotationYaw) + 180) % 360);
-        float distY0 = (float) ((vector2d.getY() + 180) % 360 - (MathHelper.wrapDegrees(attacker.rotationPitch) + 180) % 360);
-        float distX1 = (float) (vector2d.getX() - MathHelper.wrapDegrees(attacker.rotationYaw));
-        float distY1 = (float) (vector2d.getY() - MathHelper.wrapDegrees(attacker.rotationPitch));
+        return aimDist((float) vector2d.getX(), (float) vector2d.getY(), attacker.rotationYaw, attacker.rotationPitch);
+    }
+    
+    public static float aimDist(float yaw0, float pitch0, float yaw1, float pitch1)  {
+        float distX0 = (MathHelper.wrapDegrees(yaw0) + 180) % 360 - (MathHelper.wrapDegrees(yaw1) + 180) % 360;
+        float distY0 = (MathHelper.wrapDegrees(pitch0) + 180) % 360 - (MathHelper.wrapDegrees(pitch1) + 180) % 360;
+        float distX1 = MathHelper.wrapDegrees(yaw0) - MathHelper.wrapDegrees(yaw1);
+        float distY1 = MathHelper.wrapDegrees(pitch0) - MathHelper.wrapDegrees(pitch1);
         float distX = Math.min(Math.abs(distX0), Math.abs(distX1));
         float distY = Math.min(Math.abs(distY0), Math.abs(distY1));
         return (float) Math.sqrt(distX * distX + distY * distY);
