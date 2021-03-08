@@ -104,7 +104,7 @@ public class GUIReport {
         if(selected < 0)
             selected = 0;
         
-        if(mc.currentScreen instanceof GuiChat)
+        if(mc.currentScreen != null)
             enterDown = true;
     
         if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
