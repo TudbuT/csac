@@ -92,16 +92,18 @@ public class GUIReport {
         if (selectedType == -1) {
             for (int i = Math.max(0, selected - 5); i < Math.min(selected + 5, players.length); i++) {
                 mc.fontRenderer.drawString(
-                        (selected == i ? "§m| §f" : "| §f") +
                         (
-                                players[i].getDisplayName() != null ?
-                                players[i].getDisplayName().getUnformattedText() :
-                                ScorePlayerTeam.formatPlayerName(
-                                        players[i].getPlayerTeam(),
-                                        players[i].getGameProfile().getName()
-                                )
-                        ) +
-                        (selected == i ? "§r§c > " : ""),
+                                (selected == i ? "§m| §f " : "| §f ") +
+                                (
+                                        players[i].getDisplayName() != null ?
+                                        players[i].getDisplayName().getUnformattedText() :
+                                        ScorePlayerTeam.formatPlayerName(
+                                                players[i].getPlayerTeam(),
+                                                players[i].getGameProfile().getName()
+                                        )
+                                ) +
+                                (selected == i ? "§r§c > " : "")
+                        ),
                         x, y, selected == i ? 0xff0000 : 0x00ff00
                 );
                 y += 10;
@@ -109,7 +111,13 @@ public class GUIReport {
         }
         else {
             for (int i = 0; i < ReportType.values().length; i++) {
-                mc.fontRenderer.drawString((selectedType == i ? "< §m| §f" : "< | §f") + ReportType.values()[i].name(), x, y, selectedType == i ? 0xff0000 : 0x00ff00);
+                mc.fontRenderer.drawString(
+                        (
+                                (selectedType == i ? "< §m| §f " : "< | §f ") +
+                                ReportType.values()[i].name()
+                        ),
+                        x, y, selectedType == i ? 0xff0000 : 0x00ff00
+                );
                 y += 10;
             }
         
