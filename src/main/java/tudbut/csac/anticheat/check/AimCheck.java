@@ -12,7 +12,6 @@ public class AimCheck extends Check {
         float f = 0;
     
         float aimDist = AntiCheat.aimDist(attacked, attacker);
-        System.out.println(aimDist);
         f += aimDist / (360) * 0.75;
         
         rotationsLastTick.setIfNull(attacker.getEntityId(), new Vector2d(attacker.rotationYaw, attacker.rotationPitch));
