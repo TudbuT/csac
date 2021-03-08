@@ -69,7 +69,7 @@ public class GUIReport {
         
         for (int i = Math.max(0, selected - 5); i < Math.min(selected + 5, players.length); i++) {
             mc.fontRenderer.drawString(
-                    (selected == i ? "§m| §r" : "| ") + (
+                    (selected == i ? "§m| §f" : "| §f") + (
                             players[i].getDisplayName() != null ?
                             players[i].getDisplayName().getUnformattedText() :
                             ScorePlayerTeam.formatPlayerName(
