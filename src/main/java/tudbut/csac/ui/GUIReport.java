@@ -1,6 +1,7 @@
 package tudbut.csac.ui;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.EntityLivingBase;
@@ -102,6 +103,9 @@ public class GUIReport {
             selected = players.length - 1;
         if(selected < 0)
             selected = 0;
+        
+        if(mc.currentScreen instanceof GuiChat)
+            enterDown = true;
     
         if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
             if (mc.currentScreen == null) {
