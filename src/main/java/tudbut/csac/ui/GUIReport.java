@@ -69,7 +69,7 @@ public class GUIReport {
         
         for (int i = Math.max(0, selected - 5); i < Math.min(selected + 5, players.length); i++) {
             mc.fontRenderer.drawString(
-                    (selected == i ? "|-" : "|  ") + (
+                    (selected == i ? "§m| §r" : "| ") + (
                             players[i].getDisplayName() != null ?
                             players[i].getDisplayName().getUnformattedText() :
                             ScorePlayerTeam.formatPlayerName(
@@ -82,7 +82,7 @@ public class GUIReport {
             y+=10;
         }
         
-        if(Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+        if(Keyboard.isKeyDown(Keyboard.KEY_UP) && mc.currentScreen == null) {
             if(!upDown)
                 selected--;
             upDown = true;
@@ -90,7 +90,7 @@ public class GUIReport {
         else
             upDown = false;
     
-        if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+        if(Keyboard.isKeyDown(Keyboard.KEY_DOWN) && mc.currentScreen == null) {
             if(!downDown)
                 selected++;
             downDown = true;
@@ -102,14 +102,17 @@ public class GUIReport {
             selected = players.length - 1;
         if(selected < 0)
             selected = 0;
-        
-        if(Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
-            if(!enterDown)
-                ChatUtils.simulateSend("/report " + players[selected].getGameProfile().getName() + " cheating", false);
+    
+        if (Keyboard.isKeyDown(Keyboard.KEY_RETURN)) {
+            if (mc.currentScreen == null) {
+                if (!enterDown)
+                    ChatUtils.simulateSend("/report " + players[selected].getGameProfile().getName() + " cheating", false);
+            }
             enterDown = true;
         }
-        else
+        else {
             enterDown = false;
+        }
         
         playersLastTick = players;
     }
