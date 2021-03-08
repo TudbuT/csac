@@ -93,7 +93,7 @@ public class AntiCheat {
                     if (results.get(mostLikelyAttacker.getName()) > 3) {
                         ChatUtils.print("§c[REPORTING] " + mostLikelyAttacker.getName() + " is very likely to be hacking. Reporting...");
                         results.set(mostLikelyAttacker.getName(), -1f);
-                        ChatUtils.simulateSend("/report " + mostLikelyAttacker.getName() + " cheating", false);
+                        //ChatUtils.simulateSend("/report " + mostLikelyAttacker.getName() + " cheating", false);
                     }
                 }
             }
