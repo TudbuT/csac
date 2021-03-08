@@ -30,7 +30,7 @@ public class ReachCheck extends Check {
         // Calculate reach and add it to the record
         record.recordReach(calculateReach(attacker, attacked));
         
-        f = record.offenses / 8;
+        f = record.offenses / 4;
         
         return f;
     }
@@ -92,12 +92,12 @@ public class ReachCheck extends Check {
                 playerReach += reach; // Add reach
                 playerReach /= 2; // Average between this reach and the reach recorded before
                 if(!isReachNormal()) {
-                    offenses++; // Add offense if reach is too much
+                    offenses+=2; // Add offense if reach is too much
                     allOffenses++;
                     return;
                 }
             }
-            offenses -= 0.5;
+            offenses -= 1;
             // If reach is normal and achievable,
             // remove one fifth of a offense, so after 5 normal hits,
             // a strange hit is normalized again.
