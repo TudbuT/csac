@@ -17,7 +17,9 @@ public class AttackerDetection {
                                 e.getDistance(entity) < 10 &&
                                 e.getEntityId() != mc.player.getEntityId() &&
                                 e.getEntityId() != entity.getEntityId() &&
-                                e.getHeldItemMainhand().getItem() != Items.BOW
+                                e.getHeldItemMainhand().getItem() != Items.BOW &&
+                                e.getHeldItemMainhand().getItem() != Items.FIRE_CHARGE &&
+                                e.getHeldItemMainhand().getItem() != Items.FIREWORK_CHARGE
                 ))
         );
     }

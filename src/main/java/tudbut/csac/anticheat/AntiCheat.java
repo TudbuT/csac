@@ -30,17 +30,17 @@ public class AntiCheat {
                 lowestCost = f;
             }
         }
-        
-        if(mostLikelyAttacker != null)
+    
+        if (mostLikelyAttacker != null)
             onHit(attacked, mostLikelyAttacker);
     }
     
-    public static float aimDist(EntityLivingBase attacked, EntityLivingBase attacker)  {
+    public static float aimDist(EntityLivingBase attacked, EntityLivingBase attacker) {
         Vector2d vector2d = Utils.getLegitRotations(attacked.getPositionVector().add(0, 1.5, 0));
         return aimDist((float) vector2d.getX(), (float) vector2d.getY(), attacker.rotationYaw, attacker.rotationPitch);
     }
     
-    public static float aimDist(float yaw0, float pitch0, float yaw1, float pitch1)  {
+    public static float aimDist(float yaw0, float pitch0, float yaw1, float pitch1) {
         float distX0 = (MathHelper.wrapDegrees(yaw0) + 180) % 360 - (MathHelper.wrapDegrees(yaw1) + 180) % 360;
         float distY0 = (MathHelper.wrapDegrees(pitch0) + 180) % 360 - (MathHelper.wrapDegrees(pitch1) + 180) % 360;
         float distX1 = MathHelper.wrapDegrees(yaw0) - MathHelper.wrapDegrees(yaw1);
@@ -53,7 +53,7 @@ public class AntiCheat {
     private static float getAttackCost(EntityLivingBase attacked, EntityLivingBase attacker) {
         float f = 0;
         
-        if(attacker.swingProgress != -1) {
+        if (attacker.swingProgress != -1) {
             f += attacker.swingProgress * 50;
         }
         
@@ -90,7 +90,7 @@ public class AntiCheat {
                 results.setIfNull(mostLikelyAttacker.getName(), 0f);
                 if(results.get(mostLikelyAttacker.getName()) != -1) {
                     results.set(mostLikelyAttacker.getName(), results.get(mostLikelyAttacker.getName()) + f);
-                    if (results.get(mostLikelyAttacker.getName()) > 7.5) {
+                    if (results.get(mostLikelyAttacker.getName()) > 6) {
                         ChatUtils.print("§c[REPORTING] " + mostLikelyAttacker.getName() + " is very likely to be hacking. Reporting...");
                         results.set(mostLikelyAttacker.getName(), -1f);
                         try {
@@ -101,6 +101,11 @@ public class AntiCheat {
                         }
                         ChatUtils.simulateSend("/report " + mostLikelyAttacker.getName() + " cheating", false);
                     }
+                }
+            }
+            else {
+                if (results.get(mostLikelyAttacker.getName()) != null && results.get(mostLikelyAttacker.getName()) != -1 && results.get(mostLikelyAttacker.getName()) > 0.1) {
+                    results.set(mostLikelyAttacker.getName(), results.get(mostLikelyAttacker.getName()) - 0.1f);
                 }
             }
         }

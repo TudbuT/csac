@@ -26,10 +26,10 @@ minecraft {
     version = "${minecraft_version}-${forge_version}"
     runDir = "run"
     mappings = mappings_version
-    String resolved_core_plugin = mod_core_plugin.replace('${mod_group}', mod_group).replace('${mod_id}', mod_id);
+    String resolved_core_plugin = mod_core_plugin.replace('${mod_group}', mod_group).replace('${mod_id}', mod_id)
     clientJvmArgs += "-Dfml.coreMods.load=${resolved_core_plugin}"
     serverJvmArgs += "-Dfml.coreMods.load=${resolved_core_plugin}"
-    String resolved_core_config = mod_mixin_configs.replace('${mod_id}', mod_id);
+    String resolved_core_config = mod_mixin_configs.replace('${mod_id}', mod_id)
     clientRunArgs += "--mixin ${resolved_core_config}"
     serverRunArgs += "--mixin ${resolved_core_config}"
 }
@@ -45,7 +45,7 @@ dependencies {
         exclude module: 'gson'
     }
 
-    provided fileTree(include: ['*.jar'], dir: 'lib');
+    provided fileTree(include: ['*.jar'], dir: 'lib')
 }
 
 processResources {
