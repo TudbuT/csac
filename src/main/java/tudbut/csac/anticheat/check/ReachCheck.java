@@ -9,6 +9,7 @@ import tudbut.obj.TLMap;
 // From tudbut/minecraft_fullReachFix
 public class ReachCheck extends Check {
     
+    public static float mr = 4.5f;
     static TLMap<String, PlayerRecord> records = new TLMap<>();
     
     @Override
@@ -80,7 +81,7 @@ public class ReachCheck extends Check {
         
         // Reach below configured max?
         public boolean isReachNormal() {
-            return playerReach < 4.5;
+            return playerReach < mr;
         }
         
         // Offense counter for plugin

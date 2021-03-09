@@ -10,6 +10,7 @@ import java.util.Map;
 public class HitDetection {
     static Map<Entity, Integer> entityHurtTimeLastTick = new HashMap<>();
     static Minecraft mc = Minecraft.getMinecraft();
+    public static float rad = -1;
     
     private static void checkHurtTimes(Map<Entity, Integer> thisTick, Map<Entity, Integer> lastTick) {
         Entity[] entities = thisTick.keySet().toArray(new Entity[0]);
@@ -35,7 +36,8 @@ public class HitDetection {
         EntityLivingBase[] entities = mc.world.getEntities(EntityLivingBase.class, e -> true).toArray(new EntityLivingBase[0]);
         
         for (int i = 0; i < entities.length; i++) {
-            map.put(entities[i], entities[i].hurtTime);
+            if(rad == -1 || (entities[i].getDistance(mc.player) < rad))
+                map.put(entities[i], entities[i].hurtTime);
         }
         
         return map;

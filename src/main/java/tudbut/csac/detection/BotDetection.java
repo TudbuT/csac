@@ -17,9 +17,10 @@ public class BotDetection {
         ArrayList<EntityLivingBase> r = new ArrayList<>();
     
         for (int i = 0; i < list.size(); i++) {
-            if(ticksExisted.get(list.get(i).getEntityId()) >= 60) {
-                r.add(list.get(i));
-            }
+            if(ticksExisted.get(list.get(i).getEntityId()) != null)
+                if(ticksExisted.get(list.get(i).getEntityId()) >= 60) {
+                    r.add(list.get(i));
+                }
         }
         
         return r.toArray(new EntityLivingBase[0]);
@@ -28,9 +29,11 @@ public class BotDetection {
     public static void onTick() {
         EntityLivingBase[] entities = mc.world.getEntities(EntityLivingBase.class, e -> true).toArray(new EntityLivingBase[0]);
         for (int i = 0; i < entities.length; i++) {
-            ticksExisted.setIfNull(entities[i].getEntityId(), 0);
-            if(!entities[i].isInvisible() && entities[i].getHeldItemMainhand().getItem() != Items.AIR && entities[i].getName().length() >= 3) {
-                ticksExisted.set(entities[i].getEntityId(), ticksExisted.get(entities[i].getEntityId()) + 1);
+            if(HitDetection.rad == -1 || (entities[i].getDistance(mc.player) < HitDetection.rad)) {
+                ticksExisted.setIfNull(entities[i].getEntityId(), 0);
+                if (!entities[i].isInvisible() && entities[i].getHeldItemMainhand().getItem() != Items.AIR && entities[i].getName().length() >= 3) {
+                    ticksExisted.set(entities[i].getEntityId(), ticksExisted.get(entities[i].getEntityId()) + 1);
+                }
             }
         }
     }
