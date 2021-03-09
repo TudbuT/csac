@@ -2,6 +2,7 @@ package tudbut.csac.anticheat;
 
 import de.tudbut.type.StringArray;
 import de.tudbut.type.Vector2d;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.MathHelper;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 public class AntiCheat {
     
     public static TLMap<String, Float> results = new TLMap<>();
+    static Minecraft mc = Minecraft.getMinecraft();
+    public static boolean autoReport = true;
     
     public static void onHit(EntityLivingBase attacked, EntityLivingBase[] potentialAttackers) {
         EntityLivingBase mostLikelyAttacker = null;
@@ -67,7 +70,7 @@ public class AntiCheat {
     }
     
     private static void onHit(EntityLivingBase attacked, EntityLivingBase mostLikelyAttacker) {
-        if(mostLikelyAttacker instanceof EntityPlayer) {
+        if(mostLikelyAttacker instanceof EntityPlayer && mostLikelyAttacker.getEntityId() != mc.player.getEntityId()) {
             System.out.println(mostLikelyAttacker.getName() + " attacked " + attacked.getName());
             float f = 0;
     
@@ -90,7 +93,7 @@ public class AntiCheat {
                 results.setIfNull(mostLikelyAttacker.getName(), 0f);
                 if(results.get(mostLikelyAttacker.getName()) != -1) {
                     results.set(mostLikelyAttacker.getName(), results.get(mostLikelyAttacker.getName()) + f);
-                    if (results.get(mostLikelyAttacker.getName()) > 3) {
+                    if (results.get(mostLikelyAttacker.getName()) > 3 && autoReport) {
                         ChatUtils.print("§c[REPORTING] " + mostLikelyAttacker.getName() + " is very likely to be hacking. Reporting...");
                         results.set(mostLikelyAttacker.getName(), -1f);
                         ChatUtils.simulateSend("/report " + mostLikelyAttacker.getName() + " cheating", false);

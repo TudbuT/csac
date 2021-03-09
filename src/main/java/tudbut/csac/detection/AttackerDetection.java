@@ -15,7 +15,6 @@ public class AttackerDetection {
                         EntityLivingBase.class,
                         e ->
                                 e.getDistance(entity) < 8 &&
-                                e.getEntityId() != mc.player.getEntityId() &&
                                 e.getEntityId() != entity.getEntityId() &&
                                 e.swingProgressInt != -1 &&
                                 e.getHeldItemMainhand().getItem() != Items.BOW &&

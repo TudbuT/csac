@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.lwjgl.opengl.Display;
+import tudbut.csac.anticheat.AntiCheat;
 import tudbut.csac.anticheat.check.AimCheck;
 import tudbut.csac.anticheat.check.ReachCheck;
 import tudbut.csac.detection.HitDetection;
@@ -34,6 +35,7 @@ public class CSAC {
                                                   "    # distance between you and the battle for it to\n" +
                                                   "    # be recorded\n" +
                                                   "\n" +
+                                                  "autoReport: true\n" +
                                                   "\n" +
                                                   "# DO NOT MODIFY UNLESS YOU KNOW WHAT YOU ARE DOING!!!\n" +
                                                   "checks {\n" +
@@ -58,8 +60,9 @@ public class CSAC {
             HitDetection.rad = tcn.getFloat("range");
             AimCheck.rot = tcn.getInteger("checks#aim#rot");
             ReachCheck.mr = tcn.getFloat("checks#reach#max");
+            AntiCheat.autoReport = tcn.getBoolean("autoReport");
         }
-        catch (TCN.TCNException | IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
