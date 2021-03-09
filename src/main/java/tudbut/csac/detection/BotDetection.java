@@ -29,7 +29,7 @@ public class BotDetection {
         EntityLivingBase[] entities = mc.world.getEntities(EntityLivingBase.class, e -> true).toArray(new EntityLivingBase[0]);
         for (int i = 0; i < entities.length; i++) {
             ticksExisted.setIfNull(entities[i].getEntityId(), 0);
-            if(!entities[i].isInvisible() && entities[i].getHeldItemMainhand().getItem() != Items.AIR) {
+            if(!entities[i].isInvisible() && entities[i].getHeldItemMainhand().getItem() != Items.AIR && entities[i].getName().length() >= 3) {
                 ticksExisted.set(entities[i].getEntityId(), ticksExisted.get(entities[i].getEntityId()) + 1);
             }
         }
