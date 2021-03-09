@@ -50,7 +50,7 @@ public class AntiCheat {
         float distY1 = MathHelper.wrapDegrees(pitch0) - MathHelper.wrapDegrees(pitch1);
         float distX = Math.min(Math.abs(distX0), Math.abs(distX1));
         float distY = Math.min(Math.abs(distY0), Math.abs(distY1));
-        return (float) (1 / Utils.fisqrt(distX * distX + distY * distY));
+        return 1 / Utils.fisqrt(distX * distX + distY * distY);
     }
     
     private static float getAttackCost(EntityLivingBase attacked, EntityLivingBase attacker) {
@@ -70,7 +70,7 @@ public class AntiCheat {
     }
     
     private static void onHit(EntityLivingBase attacked, EntityLivingBase mostLikelyAttacker) {
-        if(mostLikelyAttacker instanceof EntityPlayer && mostLikelyAttacker.getEntityId() != mc.player.getEntityId()) {
+        if(mostLikelyAttacker instanceof EntityPlayer /*&& mostLikelyAttacker.getEntityId() != mc.player.getEntityId()*/) {
             System.out.println(mostLikelyAttacker.getName() + " attacked " + attacked.getName());
             float f = 0;
     

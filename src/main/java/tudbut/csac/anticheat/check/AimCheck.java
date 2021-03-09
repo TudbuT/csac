@@ -12,7 +12,7 @@ public class AimCheck extends Check {
     @Override
     public float check(EntityLivingBase attacked, EntityLivingBase attacker) {
         float f = 0;
-    
+        
         float aimScore = (rot - AntiCheat.aimDist(attacked, attacker)) / rot;
         
         if(aimScore < 0)
@@ -21,7 +21,6 @@ public class AimCheck extends Check {
         rotationsLastTick.setIfNull(attacker.getEntityId(), new Vector2d(attacker.rotationYaw, attacker.rotationPitch));
         Vector2d vec = rotationsLastTick.get(attacker.getEntityId());
         float aimDist = AntiCheat.aimDist((float) vec.getX(), (float) vec.getY(), attacker.rotationYaw, attacker.rotationPitch) / rot;
-        
         rotationsLastTick.set(attacker.getEntityId(), new Vector2d(attacker.rotationYaw, attacker.rotationPitch));
     
         f += aimScore * aimDist;
