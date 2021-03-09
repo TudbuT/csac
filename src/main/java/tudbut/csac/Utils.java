@@ -100,4 +100,14 @@ public class Utils { // A bunch of utils that don't deserve their own class, sel
         
         return new BlockPos(x,y,z);
     }
+    
+    public static double fisqrt(double x){
+        double xHalfed = 0.5f * x;
+        long i = Double.doubleToRawLongBits(x);
+        i = 0x5f3759df - (i >> 1);
+        x = Double.longBitsToDouble(i);
+        x = x*(1.5f - xHalfed*x*x);
+        x = x*(1.5f - xHalfed*x*x);
+        return x;
+    }
 }
