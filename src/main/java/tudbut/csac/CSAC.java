@@ -57,7 +57,7 @@ public class CSAC {
             TCN tcn = TCN.read(new StreamReader(new FileInputStream("csac.txt")).readAllAsString());
             HitDetection.rad = tcn.getFloat("range");
             AimCheck.rot = tcn.getInteger("checks#aim#rot");
-            ReachCheck.mr = tcn.getInteger("checks#reach#max");
+            ReachCheck.mr = tcn.getFloat("checks#reach#max");
         }
         catch (TCN.TCNException | IOException e) {
             e.printStackTrace();
