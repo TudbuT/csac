@@ -70,7 +70,7 @@ public class AntiCheat {
     }
     
     private static void onHit(EntityLivingBase attacked, EntityLivingBase mostLikelyAttacker) {
-        if(mostLikelyAttacker instanceof EntityPlayer /*&& mostLikelyAttacker.getEntityId() != mc.player.getEntityId()*/) {
+        if(mostLikelyAttacker instanceof EntityPlayer && mostLikelyAttacker.getEntityId() != mc.player.getEntityId()) {
             System.out.println(mostLikelyAttacker.getName() + " attacked " + attacked.getName());
             float f = 0;
     
