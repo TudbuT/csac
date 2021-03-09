@@ -54,13 +54,13 @@ public class AntiCheat {
         float f = 0;
         
         if (attacker.swingProgress != -1) {
-            f += attacker.swingProgress * 50;
+            f += attacker.swingProgress * 90;
         }
         
         f += aimDist(attacked, attacker);
         
         if(attacker.swingProgressInt == -1) {
-            f *= 50;
+            f = Float.MAX_VALUE;
         }
         
         return f;
