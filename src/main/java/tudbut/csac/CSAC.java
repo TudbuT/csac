@@ -70,15 +70,18 @@ public class CSAC {
         
         new Thread(() -> {
             while (true) {
-                ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
-                if(serverData != null)
-                    ping = Utils.getPingToServer(serverData);
                 try {
-                    Thread.sleep(10000);
+                    ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
+                    if (serverData != null)
+                        ping = Utils.getPingToServer(serverData);
+                    try {
+                        Thread.sleep(10000);
+                    }
+                    catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                catch (Throwable ignore) { }
             }
             
         }).start();
