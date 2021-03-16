@@ -3,6 +3,7 @@ package tudbut.csac;
 import de.tudbut.io.StreamReader;
 import de.tudbut.tools.FileRW;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -23,7 +24,8 @@ import java.io.IOException;
 @Mod(modid = CSAC.MOD_ID)
 public class CSAC {
     public static final String MOD_ID = "csac";
-
+    public static long ping;
+    
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(EventHandler.class);
@@ -65,6 +67,21 @@ public class CSAC {
         catch (Exception e) {
             e.printStackTrace();
         }
+        
+        new Thread(() -> {
+            while (true) {
+                ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
+                if(serverData != null)
+                    ping = Utils.getPingToServer(serverData);
+                try {
+                    Thread.sleep(10000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            
+        }).start();
     }
     
     @Mod.EventHandler

@@ -4,14 +4,31 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import de.tudbut.type.Vector2d;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerAddress;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.entity.Entity;
+import net.minecraft.network.EnumConnectionState;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.handshake.client.C00Handshake;
+import net.minecraft.network.status.INetHandlerStatusClient;
+import net.minecraft.network.status.client.CPacketPing;
+import net.minecraft.network.status.client.CPacketServerQuery;
+import net.minecraft.network.status.server.SPacketPong;
+import net.minecraft.network.status.server.SPacketServerInfo;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 
+import javax.annotation.Nullable;
 import java.lang.reflect.Field;
+import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Utils { // A bunch of utils that don't deserve their own class, self-explanatory
     
@@ -109,5 +126,55 @@ public class Utils { // A bunch of utils that don't deserve their own class, sel
         x = x*(1.5f - xHalfed*x*x);
         x = x*(1.5f - xHalfed*x*x);
         return x;
+    }
+    
+    public static long getPingToServer(ServerData server) {
+        
+        server = new ServerData(server.serverName, server.serverIP, server.isOnLAN());
+        
+        try {
+            AtomicLong pingSentAt = new AtomicLong();
+            AtomicBoolean done = new AtomicBoolean();
+            
+            ServerAddress serveraddress = ServerAddress.fromString(server.serverIP);
+            final NetworkManager networkmanager;
+            networkmanager = NetworkManager.createNetworkManagerAndConnect(InetAddress.getByName(serveraddress.getIP()), serveraddress.getPort(), false);
+            
+            server.pingToServer = -1L;
+            ServerData finalServer = server;
+            networkmanager.setNetHandler(new INetHandlerStatusClient() {
+                @Override
+                public void onDisconnect(@Nullable ITextComponent reason) {
+                    done.set(true);
+                }
+                
+                private boolean successful;
+                private boolean receivedStatus;
+                
+                @Override
+                public void handleServerInfo(@Nullable SPacketServerInfo packetIn) {
+                
+                }
+                
+                public void handlePong(@Nullable SPacketPong packetIn) {
+                    long j = Minecraft.getSystemTime();
+                    finalServer.pingToServer = j - pingSentAt.get();
+                    networkmanager.closeChannel(new TextComponentString("Finished"));
+                    done.set(true);
+                }
+            });
+            
+            networkmanager.sendPacket(new C00Handshake(serveraddress.getIP(), serveraddress.getPort(), EnumConnectionState.STATUS, false));
+            pingSentAt.set(new Date().getTime());
+            networkmanager.sendPacket(new CPacketServerQuery());
+            networkmanager.sendPacket(new CPacketPing(pingSentAt.get()));
+            
+            while (!done.get()) ;
+            
+            return server.pingToServer / 2;
+        }
+        catch (Throwable ignored) {
+            return -1;
+        }
     }
 }

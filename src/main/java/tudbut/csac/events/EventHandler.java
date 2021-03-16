@@ -19,6 +19,7 @@ import tudbut.csac.Utils;
 import tudbut.csac.detection.BotDetection;
 import tudbut.csac.detection.HitDetection;
 import tudbut.csac.ui.GUIReport;
+import tudbut.csac.ui.GuiUtilsIngame;
 
 import javax.xml.crypto.Data;
 import java.util.HashMap;
@@ -42,6 +43,7 @@ public class EventHandler {
     public static void onHUDRender(RenderGameOverlayEvent.Post event) {
         if(event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
             GUIReport.render();
+            GuiUtilsIngame.draw();
         }
     }
 }
