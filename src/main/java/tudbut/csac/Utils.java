@@ -165,8 +165,8 @@ public class Utils { // A bunch of utils that don't deserve their own class, sel
             });
             
             networkmanager.sendPacket(new C00Handshake(serveraddress.getIP(), serveraddress.getPort(), EnumConnectionState.STATUS, false));
-            pingSentAt.set(new Date().getTime());
             networkmanager.sendPacket(new CPacketServerQuery());
+            pingSentAt.set(new Date().getTime());
             networkmanager.sendPacket(new CPacketPing(pingSentAt.get()));
             
             while (!done.get()) ;
