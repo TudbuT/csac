@@ -118,7 +118,7 @@ public class Utils { // A bunch of utils that don't deserve their own class, sel
         return new BlockPos(x,y,z);
     }
     
-    public static float fisqrt(float x){
+    public static float Q_sqrt(float x){
         float xHalfed = 0.5f * x;
         int i = Float.floatToRawIntBits(x);
         i = 0x5f3759df - (i >> 1);
@@ -128,11 +128,13 @@ public class Utils { // A bunch of utils that don't deserve their own class, sel
         return x;
     }
     
-    public static long getPingToServer(ServerData server) {
+    public static long[] getPingToServer(ServerData server) {
         
         server = new ServerData(server.serverName, server.serverIP, server.isOnLAN());
         
         try {
+            long sa = new Date().getTime();
+            
             AtomicLong pingSentAt = new AtomicLong();
             AtomicBoolean done = new AtomicBoolean();
             
@@ -141,21 +143,25 @@ public class Utils { // A bunch of utils that don't deserve their own class, sel
             networkmanager = NetworkManager.createNetworkManagerAndConnect(InetAddress.getByName(serveraddress.getIP()), serveraddress.getPort(), false);
             
             server.pingToServer = -1L;
+            final long[] players = { 1, 1 };
             ServerData finalServer = server;
             networkmanager.setNetHandler(new INetHandlerStatusClient() {
                 @Override
                 public void onDisconnect(@Nullable ITextComponent reason) {
                     done.set(true);
                 }
-                
-                private boolean successful;
-                private boolean receivedStatus;
-                
+        
                 @Override
                 public void handleServerInfo(@Nullable SPacketServerInfo packetIn) {
-                
+                    pingSentAt.set(new Date().getTime());
+                    networkmanager.sendPacket(new CPacketPing(pingSentAt.get()));
+                    try {
+                        assert packetIn != null;
+                        players[0] = packetIn.getResponse().getPlayers().getOnlinePlayerCount();
+                        players[1] = packetIn.getResponse().getPlayers().getMaxPlayers();
+                    } catch (Exception ignored) { }
                 }
-                
+        
                 public void handlePong(@Nullable SPacketPong packetIn) {
                     long j = Minecraft.getSystemTime();
                     finalServer.pingToServer = j - pingSentAt.get();
@@ -163,18 +169,21 @@ public class Utils { // A bunch of utils that don't deserve their own class, sel
                     done.set(true);
                 }
             });
-            
+    
             networkmanager.sendPacket(new C00Handshake(serveraddress.getIP(), serveraddress.getPort(), EnumConnectionState.STATUS, false));
             networkmanager.sendPacket(new CPacketServerQuery());
-            pingSentAt.set(new Date().getTime());
-            networkmanager.sendPacket(new CPacketPing(pingSentAt.get()));
             
-            while (!done.get()) ;
+            while (!done.get() && (new Date().getTime() - sa) < 5000) ;
             
-            return server.pingToServer / 2;
+            return new long[] { server.pingToServer, players[0], players[1] };
         }
         catch (Throwable ignored) {
-            return -1;
+            return new long[] { -1, 1, 1 };
         }
+    }
+    
+    public static float roundTo(float f, int p) {
+        p = (int) Math.pow(10, p);
+        return (float) Math.round(f * p) / p;
     }
 }

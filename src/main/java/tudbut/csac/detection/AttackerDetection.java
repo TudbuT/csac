@@ -16,7 +16,7 @@ public class AttackerDetection {
                         e ->
                                 e.getDistance(entity) < 8 &&
                                 e.getEntityId() != entity.getEntityId() &&
-                                e.swingProgressInt != -1 &&
+                                e.isSwingInProgress &&
                                 e.getHeldItemMainhand().getItem() != Items.BOW &&
                                 e.getHeldItemMainhand().getItem() != Items.FISHING_ROD &&
                                 e.getHeldItemMainhand().getItem() != Items.FIRE_CHARGE &&

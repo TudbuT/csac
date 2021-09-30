@@ -50,7 +50,7 @@ public class AntiCheat {
         float distY1 = MathHelper.wrapDegrees(pitch0) - MathHelper.wrapDegrees(pitch1);
         float distX = Math.min(Math.abs(distX0), Math.abs(distX1));
         float distY = Math.min(Math.abs(distY0), Math.abs(distY1));
-        return 1 / Utils.fisqrt(distX * distX + distY * distY);
+        return 1 / Utils.Q_sqrt(distX * distX + distY * distY);
     }
     
     private static float getAttackCost(EntityLivingBase attacked, EntityLivingBase attacker) {

@@ -6,6 +6,8 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.Entity;
 import tudbut.csac.CSAC;
+import tudbut.csac.Utils;
+import tudbut.csac.events.EventHandler;
 import tudbut.obj.Vector2i;
 
 public class GuiUtilsIngame extends Gui {
@@ -25,11 +27,10 @@ public class GuiUtilsIngame extends Gui {
         if(!CSAC.ingameCheck())
             return;
         
-        drawString("Ping: " + CSAC.ping, x, y, 0xff00ff00);
-        y-=10;
         
         y = drawPos(mc.player, "Player", x, y);
-        y-=10;
+        drawString("Ping: " + CSAC.ping[0] + " | TPS: " + (Utils.roundTo(EventHandler.tps, 2)) + " | Players: " + CSAC.ping[1] + "/" + CSAC.ping[2], x, y, 0xff00ff00);
+        
     }
     
     private void drawString(String s, int x, int y, int color) {

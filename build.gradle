@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        jcenter()
         maven { url = "http://files.minecraftforge.net/maven" }
         maven { url = "https://repo.spongepowered.org/maven" }
     }
@@ -15,11 +14,10 @@ apply plugin: 'eclipse'
 
 version = mod_version
 group = mod_group
-archivesBaseName = mod_id
 
-sourceCompatibility = targetCompatibility = '1.8'
 compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
+    options.encoding = "UTF-8"
 }
 
 minecraft {

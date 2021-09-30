@@ -1,5 +1,6 @@
 package tudbut.csac.mixin;
 
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -16,8 +17,12 @@ import javax.annotation.Nullable;
 @Mixin(NetworkManager.class)
 public class MixinNetworkManager {
 
-    @Inject(method = "dispatchPacket", at = @At("TAIL"))
-    private void dispatchPacket(final Packet<?> p_dispatchPacket_1_, @Nullable final GenericFutureListener<? extends Future<? super Void>>[] p_dispatchPacket_2_, CallbackInfo info) {
-        EventHandler.onPacket(p_dispatchPacket_1_);
+    @Inject(method = "sendPacket(Lnet/minecraft/network/Packet;)V", at = @At("TAIL"))
+    private void dispatchPacket(final Packet<?> packet, CallbackInfo info) {
+        EventHandler.onPacket(packet);
+    }
+    @Inject(method = "channelRead0", at = @At("TAIL"))
+    private void dispatchPacket(ChannelHandlerContext context, final Packet<?> packet, CallbackInfo info) {
+        EventHandler.onPacket(packet);
     }
 }

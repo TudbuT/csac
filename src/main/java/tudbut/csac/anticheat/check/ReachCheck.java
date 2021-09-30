@@ -33,7 +33,7 @@ public class ReachCheck extends Check {
         
         if(!record.isReachNormal()) {
             f = 0.75f;
-            record.offenses = 0;
+            record.playerReach = mr;
         }
         
         return f;
@@ -84,20 +84,12 @@ public class ReachCheck extends Check {
             return playerReach < mr;
         }
         
-        // Offense counter for plugin
-        public float offenses = 0;
-        // All offenses that ever happened
-        public int allOffenses = 0;
-        
         // Called by event handler, records the reach of a hit
         public void recordReach(float reach) {
             // Not a small-distance hit
             if(reach > 1) {
                 playerReach += reach; // Add reach
                 playerReach /= 2; // Average between this reach and the reach recorded before
-                if(!isReachNormal()) {
-                    allOffenses++;
-                }
             }
         }
     }

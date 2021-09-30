@@ -24,7 +24,7 @@ import java.io.IOException;
 @Mod(modid = CSAC.MOD_ID)
 public class CSAC {
     public static final String MOD_ID = "csac";
-    public static long ping;
+    public static long[] ping = {-1, 1, 1};
     
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
@@ -37,7 +37,7 @@ public class CSAC {
                                                   "    # distance between you and the battle for it to\n" +
                                                   "    # be recorded\n" +
                                                   "\n" +
-                                                  "autoReport: true\n" +
+                                                  "autoReport: false\n" +
                                                   "\n" +
                                                   "# DO NOT MODIFY UNLESS YOU KNOW WHAT YOU ARE DOING!!!\n" +
                                                   "checks {\n" +
@@ -60,8 +60,8 @@ public class CSAC {
         try {
             TCN tcn = TCN.read(new StreamReader(new FileInputStream("csac.txt")).readAllAsString());
             HitDetection.rad = tcn.getFloat("range");
-            AimCheck.rot = tcn.getInteger("checks#aim#rot");
-            ReachCheck.mr = tcn.getFloat("checks#reach#max");
+            AimCheck.rot = tcn.getSub("checks").getSub("aim").getInteger("rot");
+            ReachCheck.mr = tcn.getSub("checks").getSub("reach").getFloat("max");
             AntiCheat.autoReport = tcn.getBoolean("autoReport");
         }
         catch (Exception e) {
@@ -72,13 +72,19 @@ public class CSAC {
             while (true) {
                 try {
                     ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
-                    if (serverData != null)
-                        ping = Utils.getPingToServer(serverData);
-                    try {
-                        Thread.sleep(10000);
+                    if (serverData != null) {
+                        long[] ping = Utils.getPingToServer(serverData);
+                        if(ping[0] != -1)
+                            CSAC.ping = ping;
+                        try {
+                            Thread.sleep(5000);
+                        }
+                        catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    catch (InterruptedException e) {
-                        e.printStackTrace();
+                    else {
+                        Thread.sleep(100);
                     }
                 }
                 catch (Throwable ignore) { }
